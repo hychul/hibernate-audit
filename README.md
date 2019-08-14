@@ -1,0 +1,3 @@
+`@ManyToOne` 어노테이션을 사용하는 다대일 관계에 `@OneToMany` 어노테이션을 사용하면 양방향 관계를 만들 수 있습니다. 이때 해당 외래키 DB 컬럼 자체엔 audit을 설정하지만, 그 외래키에 해당하는 엔티티의 변경에 대해서 audit을 생성하지 않기 위해 `@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)` 어노테이션을 사용하는데, 양방향 관계에서 `@OneToMany` 로 연관된 엔티티가 추가되는 경우엔 해당 엔티티의 `preUpdate` 이벤트가 발생하지 않은 상태에서 audit이 생성된다.
+
+이를 고치기 위해선 `@OneToMany` 어노테이션과 함께 `@NotAudited` 어노테이션을 함께 사용하면, 이 두 어노테이션을 사용하는 엔티티(One에 해당하는 엔티티)엔 mapped by로 연관되어 있기 때문에 DB에 영향을 주지 않고 audit을 제대로 처리할 수 있다.      
